@@ -1,0 +1,21 @@
+# 秘密情報(パスワード・APIキー等)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Terraform(state には AWS の情報や秘密が含まれることがある)
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+!example.tfvars
+
+# OS / エディタ
+.DS_Store
+Thumbs.db
+.vscode/

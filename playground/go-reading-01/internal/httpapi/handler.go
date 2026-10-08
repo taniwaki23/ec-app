@@ -1,6 +1,7 @@
 package httpapi
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"errors"
@@ -51,6 +52,9 @@ func (h *Handler) getProduct(w http.ResponseWriter, r *http.Request) {
 			writeJSON(w, http.StatusBadRequest, map[string]string{"error": verr.Error()})
 		case errors.Is(err, product.ErrNotFound):
 			writeJSON(w, http.StatusNotFound, map[string]string{"error": "product not found"})
+		case errors.Is(err, context.DeadlineExceeded):
+			writeJSON(w, http.StatusGatewayTimeout, map[string]string{"error": "request timed out"})
+
 		default:
 			log.Printf("get product: %v", err)
 			writeJSON(w, http.StatusInternalServerError, map[string]string{"error": "internal error"})
